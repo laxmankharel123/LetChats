@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:id="@+id/chatsFragment"
+    android:title="@string/txt_chats"
+    android:enabled="true"
+    android:icon="@drawable/ic_chats"/>
+
+    <item
+        android:id="@+id/groupFragment"
+        android:title="@string/txt_group"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_video_call_24"/>
+
+
+    <item
+        android:id="@+id/profileFragment"
+        android:title="@string/txt_profile"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_people_24"/>
+</menu>

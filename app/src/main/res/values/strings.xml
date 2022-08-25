@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">LetChats</string>
+    <string name="title_activity_profile_activity">Chats</string>
+    <string name="login_activity">Login Activity</string>
+    <string name="txt_welcome">Welcome to Google SignIn !</string>
+    <string name="err_no_net">No Internet Connection</string>
+    <string name="txt_will_google"> You can signIn through <b>Google For Connecting with People</b></string>
+
+    <string name="txt_profile">More</string>
+    <string name="txt_group">Call</string>
+    <string name="txt_chats">Chats</string>
+    <string name="title_notifications" translatable="false">Notifications</string>
+
+    <string name="store_email">email</string>
+
+    <string name="title_call" translatable="false">Call</string>
+    <string name="title_video" translatable="false">Video</string>
+    <string name="profile_fragment_text" translatable="false">Profile</string>
+    <string name="profile_menu_icon_title" translatable="false">Profile Icon Menu</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="home_chats_fragment">Chats blank fragment</string>
+    <string name="home_profile_fragment">Profile blank fragment</string>
+    <string name="home_group_fragment">Group blank fragment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_transaction_request">TransactionRequestActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+
+</resources>

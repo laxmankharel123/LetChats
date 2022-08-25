@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "864220631699",
+    "project_id": "letchats-9d5ca",
+    "storage_bucket": "letchats-9d5ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:864220631699:android:d903302294f915040df366",
+        "android_client_info": {
+          "package_name": "com.example.letchats"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "864220631699-h0cb4jq0l9v5jv82knuo5fdmqorvpvg0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.letchats",
+            "certificate_hash": "b2b6d83397bc3e520ae3e5848e21301a0f16bdf0"
+          }
+        },
+        {
+          "client_id": "864220631699-vsdeb9nc3gdvpo3dr7nsnub3upd7gqll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYzvlkkpJyWPr5Y5pz5P6DSQk_VyZknHQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "864220631699-vsdeb9nc3gdvpo3dr7nsnub3upd7gqll.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

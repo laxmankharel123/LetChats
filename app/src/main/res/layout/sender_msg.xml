@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/mLinear"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/message_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="8dp"
+        android:textStyle="bold|normal"
+        android:textSize="@dimen/_13sdp"
+        android:background="@drawable/item_sender_background"
+        android:padding="8dp"
+        android:textColor="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_chat_logo"
+        android:layout_margin="@dimen/_5sdp"
+        android:layout_gravity="end"
+        >
+
+    </ImageView>
+</LinearLayout>
