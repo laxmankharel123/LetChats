@@ -35,7 +35,7 @@ open class MyFriendListAdapter(private val userList: ArrayList<User>) :
 
     // binds the list items to a view
     override fun onBindViewHolder(holder: MyFriendListAdapter.MyViewHolder, position: Int) {
-        
+
         val user = userList[position]
         holder.bind(userList[position])
 
