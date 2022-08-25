@@ -16,7 +16,7 @@ import com.example.letchats.Preferences
 import com.example.letchats.R
 import com.example.letchats.login.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
+
 
 
 open class MyFriendListAdapter(private val userList: ArrayList<User>) :
@@ -35,7 +35,6 @@ open class MyFriendListAdapter(private val userList: ArrayList<User>) :
 
     // binds the list items to a view
     override fun onBindViewHolder(holder: MyFriendListAdapter.MyViewHolder, position: Int) {
-
         val user = userList[position]
         holder.bind(userList[position])
 
@@ -70,7 +69,7 @@ open class MyFriendListAdapter(private val userList: ArrayList<User>) :
 
         fun bind(user: User) {
             mAuth = FirebaseAuth.getInstance()
-            if ((user.email!! != mAuth.currentUser!!.email) && user.photo != null) {
+          //  if ((user.email!! != mAuth.currentUser!!.email)) {
                 myName.text = user.name
                 email.text = user.email
                 bindMenuImageFromUrl(
@@ -78,7 +77,11 @@ open class MyFriendListAdapter(private val userList: ArrayList<User>) :
                     user.photo
                 )
 
-            }
+          //  }
+           // else
+           // {
+           //     itemView.visibility = View.GONE
+          //  }
         }
 
 

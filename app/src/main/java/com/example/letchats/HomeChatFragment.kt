@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.letchats.MyAdapter.MyFriendListAdapter
 import com.example.letchats.databinding.FragmentHomeChatBinding
 import com.example.letchats.login.User
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 
 class HomeChatFragment : Fragment() {
@@ -21,6 +22,11 @@ class HomeChatFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var myAdapter: MyFriendListAdapter
     private lateinit var binding: FragmentHomeChatBinding
+    private lateinit var mAuth: FirebaseAuth
+    private val userList: ArrayList<User>
+        get() {
+            TODO()
+        }
     private val database = FirebaseFirestore.getInstance()
 
 
@@ -47,7 +53,7 @@ class HomeChatFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       // fetchData()
+        // fetchData()
         getRecyclerView()
 
     }
@@ -76,6 +82,8 @@ class HomeChatFragment : Fragment() {
 
     private fun EventChangeListener() {
         db = FirebaseFirestore.getInstance()
+        mAuth = FirebaseAuth.getInstance()
+        val userSame = mAuth.currentUser!!.email
         db.collection("users").orderBy("name", Query.Direction.ASCENDING)
             .addSnapshotListener(object : EventListener<QuerySnapshot> {
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
@@ -86,7 +94,10 @@ class HomeChatFragment : Fragment() {
 
                     for (dc: DocumentChange in value?.documentChanges!!) {
                         if (dc.type == DocumentChange.Type.ADDED) {
-                            userArrayList.add(dc.document.toObject(User::class.java))
+                            if ((userSame != mAuth.currentUser!!.email))
+                                userArrayList.add(dc.document.toObject(User::class.java))
+
+                        } else {
 
                         }
                     }
