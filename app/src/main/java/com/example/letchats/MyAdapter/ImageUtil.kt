@@ -19,6 +19,7 @@ import com.example.letchats.R
         Log.d("ImageUtilsAdapter", "imageUrl >>>: $imageURL")
         val requestBuilder: RequestBuilder<PictureDrawable> = Glide.with(view.context)
             .`as`(PictureDrawable::class.java)
+            .placeholder(R.drawable.ic_drawable_upload)
 
         if (imageURL != null) {
             if (imageURL.isNotEmpty() && !imageURL.isBlank()) {
@@ -37,6 +38,7 @@ import com.example.letchats.R
             Glide.with(view.context)
                 .load(imageUrl)
                 .dontAnimate()
+                .placeholder(R.drawable.ic_drawable_upload)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 // .skipMemoryCache(true)
                 //.transition(withCrossFade())

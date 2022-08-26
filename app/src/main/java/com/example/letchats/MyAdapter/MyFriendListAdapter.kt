@@ -18,11 +18,10 @@ import com.example.letchats.login.User
 import com.google.firebase.auth.FirebaseAuth
 
 
-
 open class MyFriendListAdapter(private val userList: ArrayList<User>) :
     RecyclerView.Adapter<MyFriendListAdapter.MyViewHolder>() {
     private lateinit var mAuth: FirebaseAuth
-   // private lateinit var prefernce: Preferences
+    // private lateinit var prefernce: Preferences
 
 
     // create new views
@@ -37,7 +36,6 @@ open class MyFriendListAdapter(private val userList: ArrayList<User>) :
     override fun onBindViewHolder(holder: MyFriendListAdapter.MyViewHolder, position: Int) {
         val user = userList[position]
         holder.bind(userList[position])
-
 
 
         /* val user: User = userList[position]
@@ -67,21 +65,17 @@ open class MyFriendListAdapter(private val userList: ArrayList<User>) :
         private val email: TextView = itemView.findViewById(R.id.details)
         private val image: ImageView = itemView.findViewById(R.id.image_profile)
 
+
         fun bind(user: User) {
             mAuth = FirebaseAuth.getInstance()
-          //  if ((user.email!! != mAuth.currentUser!!.email)) {
-                myName.text = user.name
-                email.text = user.email
-                bindMenuImageFromUrl(
-                    image as AppCompatImageView,
-                    user.photo
-                )
+            myName.text = user.name
+            email.text = user.email
+            bindMenuImageFromUrl(
+                image as AppCompatImageView,
+                user.photo
+            )
 
-          //  }
-           // else
-           // {
-           //     itemView.visibility = View.GONE
-          //  }
+
         }
 
 

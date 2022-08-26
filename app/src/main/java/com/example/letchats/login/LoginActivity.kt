@@ -2,13 +2,14 @@ package com.example.letchats.login
 
 import android.content.ContentValues
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.letchats.BaseActivity
-import com.example.letchats.ChatApplication.getStorage
 import com.example.letchats.ProfileActivity
 import com.example.letchats.R
 import com.example.letchats.extension.redirectToProfileActivity
@@ -36,12 +37,12 @@ class LoginActivity : BaseActivity() {
     override fun onStart() {
         super.onStart()
 
-        val currentUser = mAuth.currentUser
-        if(currentUser != null){
+        val sharedPreferences = getSharedPreferences("MyLoginPref", MODE_PRIVATE)
+        val shareStatus: Boolean = sharedPreferences.getBoolean("LoginStatus", false)
+        if (shareStatus) {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
-
 
 
     }
@@ -54,6 +55,7 @@ class LoginActivity : BaseActivity() {
         //Click on sign in button
         google_sign_button.setOnClickListener {
             signIn()
+
         }
 
     }
@@ -73,7 +75,6 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun signIn() {
-
         mAuth = FirebaseAuth.getInstance()
         val signInIntent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
@@ -106,12 +107,25 @@ class LoginActivity : BaseActivity() {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         mAuth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-              //  getStorage().storeIsUserLoginStatus(true)
+                val sharedPreferences = getSharedPreferences("MyLoginPref", MODE_PRIVATE)
+                val editor = sharedPreferences.edit()
+                editor.apply {
+                    putBoolean("LoginStatus", true)
+                    apply()
+                }
                 val userEmail = account.email.toString()
-              //  getStorage().storeUserEmail(userEmail)
                 val userName = account.displayName.toString()
                 val userPhoto = account.photoUrl
-                Log.d(ContentValues.TAG, "details: $userEmail, $userName, $userPhoto")
+
+                /* val sharedEmail = getSharedPreferences("MySharedEmail", MODE_PRIVATE)
+
+                val editorEmail = sharedEmail.edit()
+                editorEmail.apply {
+                    putString("LoginEmail", userEmail)
+                    apply()
+                }*/
+
+                Log.d(TAG, "details: $userEmail, $userName, $userPhoto")
                 saveFireStore(userEmail, userName, userPhoto)
                 redirectToProfileActivity()
             } else {
@@ -121,6 +135,7 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun saveFireStore(email: String?, name: String?, photo: Uri?) {
+        mAuth = FirebaseAuth.getInstance()
 
         if (email != null && name != null && photo != null) {
             val db: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -128,14 +143,14 @@ class LoginActivity : BaseActivity() {
             user["email"] = email.toString()
             user["name"] = name.toString()
             user["photo"] = photo.toString()
-            db.collection("users")
-                .add(user)
-                .addOnSuccessListener {
-                    Log.d(ContentValues.TAG, "record added successfully: ${it.id}")
-                }
-                .addOnFailureListener {
-                    Log.d(ContentValues.TAG, "record Failed  ")
-                }
+                db.collection("users")
+                    .add(user)
+                    .addOnSuccessListener {
+                        Log.d(ContentValues.TAG, "record added successfully: ${it.id}")
+                    }
+                    .addOnFailureListener {
+                        Log.d(ContentValues.TAG, "record Failed  ")
+            }
         }
 
 
