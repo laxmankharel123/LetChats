@@ -84,13 +84,16 @@ class ProfileActivity : AppCompatActivity() {
     private fun openProfile() {
 
         val intent = Intent(this, ProfileFragment::class.java)
+
         startActivity(intent)
-        this.finish()
+       finish()
 
         /*val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.activity_main_nav_host_fragment, ProfileFragment(), null).commit()
         binding.bottomNav.visibility = View.GONE
         binding.toolBar.visibility = View.GONE*/
     }
+
+
 
 }

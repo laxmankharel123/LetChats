@@ -1,29 +1,38 @@
 package com.example.letchats.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import com.example.letchats.ProfileActivity
 import com.example.letchats.R
-import com.example.letchats.extension.redirectToLoginActivity
-import com.example.letchats.utils.MyPrefernce
-import com.example.letchats.utils.SharedViewModel
-import com.example.letsConnect.utils.UserUtils
-
+import com.example.letchats.login.LoginActivity
 class SplashScreen: AppCompatActivity() {
 
 
-    private lateinit var sharedViewModel: SharedViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_screen)
-        sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
-        UserUtils.updatePushToken()
-        sharedViewModel.onFromSplash()
-        sharedViewModel.openMainAct.observe(this) {
-            redirectToLoginActivity()
-        }
+        handleUserDirection()
 
+    }
+
+    private fun handleUserDirection(){
+        Handler().postDelayed({
+            val sharedPreferences = getSharedPreferences("MyLoginPref", MODE_PRIVATE)
+            val shareStatus: Boolean = sharedPreferences.getBoolean("LoginStatus", false)
+            if (shareStatus) {
+                val intent = Intent(this, ProfileActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                this.finish()
+            }
+        }, 500)
     }
 
 }

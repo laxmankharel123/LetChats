@@ -2,13 +2,11 @@ package com.example.letchats.login
 
 import android.content.ContentValues
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.letchats.BaseActivity
 import com.example.letchats.ProfileActivity
 import com.example.letchats.R
@@ -21,6 +19,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.login_activity.*
 
@@ -32,18 +31,18 @@ class LoginActivity : BaseActivity() {
     private val RC_SIGN_IN: Int = 1
     lateinit var gso: GoogleSignInOptions
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var mDbRef: FirebaseDatabase
 
 
     override fun onStart() {
         super.onStart()
-
-        val sharedPreferences = getSharedPreferences("MyLoginPref", MODE_PRIVATE)
+       /* val sharedPreferences = getSharedPreferences("MyLoginPref", MODE_PRIVATE)
         val shareStatus: Boolean = sharedPreferences.getBoolean("LoginStatus", false)
         if (shareStatus) {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
-
+*/
 
     }
 
@@ -115,18 +114,26 @@ class LoginActivity : BaseActivity() {
                 }
                 val userEmail = account.email.toString()
                 val userName = account.displayName.toString()
-                val userPhoto = account.photoUrl
+                val userPhoto = account.photoUrl.toString()
+                val userId = account.id
 
-                /* val sharedEmail = getSharedPreferences("MySharedEmail", MODE_PRIVATE)
+                /* val sharedUid = getSharedPreferences("MySharedUid", MODE_PRIVATE)
+                 val editorUid = sharedUid.edit()
+                 editorUid.apply {
+                     putString("LoginUid", userId)
+                     apply()
+                 }*/
 
-                val editorEmail = sharedEmail.edit()
-                editorEmail.apply {
-                    putString("LoginEmail", userEmail)
-                    apply()
-                }*/
-
-                Log.d(TAG, "details: $userEmail, $userName, $userPhoto")
-                saveFireStore(userEmail, userName, userPhoto)
+                val dataStatus: Boolean = sharedPreferences.getBoolean("DataStatus", true)
+                Log.d(
+                    TAG,
+                    "details: $userEmail, $userName, $userPhoto,  ${mAuth.currentUser!!.uid}"
+                )
+                if (userId != null) {
+                    if (dataStatus) {
+                        saveFireStore(userEmail, userName, userPhoto, mAuth.currentUser!!.uid)
+                    }
+                }
                 redirectToProfileActivity()
             } else {
 
@@ -134,25 +141,39 @@ class LoginActivity : BaseActivity() {
         }
     }
 
-    private fun saveFireStore(email: String?, name: String?, photo: Uri?) {
-        mAuth = FirebaseAuth.getInstance()
+    private fun saveFireStore(email: String?, name: String?, photo: String?, userId: String) {
+        // store in realtime database
+        mDbRef = FirebaseDatabase.getInstance()
+        mDbRef.reference.child("users").child(userId).setValue(User(email, name, photo, userId))
+    }
+}
 
-        if (email != null && name != null && photo != null) {
+
+        //store in firestore database
+       /* mAuth = FirebaseAuth.getInstance()
             val db: FirebaseFirestore = FirebaseFirestore.getInstance()
             val user = HashMap<String, Any>()
             user["email"] = email.toString()
             user["name"] = name.toString()
             user["photo"] = photo.toString()
-                db.collection("users")
-                    .add(user)
-                    .addOnSuccessListener {
-                        Log.d(ContentValues.TAG, "record added successfully: ${it.id}")
-                    }
-                    .addOnFailureListener {
-                        Log.d(ContentValues.TAG, "record Failed  ")
-            }
-        }
+            user["userId"] = userId.toInt()
+
+            db.collection("users")
+                .add(user)
+                .addOnSuccessListener {
+                    Log.d(ContentValues.TAG, "record added successfully: ${it.id}")
+                }
+                .addOnFailureListener {
+                    Log.d(ContentValues.TAG, "record Failed  ")
+                }
+
+        }*/
 
 
-    }
-}
+
+
+
+
+
+
+
